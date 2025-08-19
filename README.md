@@ -1,63 +1,96 @@
-# Splunk_login_Detection
-A Splunk project detecting Failed Windows login attempts with dashboards for SOC analysis.
+# 🚨 Splunk Security Analysis: Windows Login Monitoring
 
 ## 📌 Project Overview
-This project demonstrates how to use **Splunk** to detect and visualize failed Windows login attempts (Event ID **4625**).  
-The goal is to simulate a **Security Operations Center (SOC) workflow** for identifying suspicious authentication failures, which can indicate brute force attacks, insider threats, or misconfigured accounts.
+This project demonstrates the use of Splunk to detect and analyze Windows login activities.  
+It includes SPL queries for monitoring successful logins, Credential Manager accesses, logins outside normal hours, and hosts with multiple logins.  
+The goal is to simulate a real-world SOC workflow for monitoring suspicious authentication activity.
 
 ---
 
-## ⚙️ Environment Setup
-- **SIEM Tool**: Splunk Enterprise (local instance)
-- **Data Source**: Windows Security Logs (`.evtx` file)
-- **Key Event**:  
-  - Event ID **4625** → Failed Login Attempts  
+> ## Step 1: Event Code Extraction
+> **Purpose:** Verify that EventCodes are extracted correctly from the Windows logs.
+>
+> ```spl
+> index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
+> | rex "EventCode:\\s(?<EventCode>\\d+)"
+> | table _time, host, EventCode, _raw
+> | head 20
+> ```
+>
+> ![Event Code Extraction](screenshots/eventcode_extraction.png)
 
 ---
 
-## 🔎 Splunk Queries
+> ## Step 2: Count Successful Logins (4624)
+> **Purpose:** Count and visualize successful login events (Event ID 4624).
+>
+> ```spl
+> index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
+> | rex "EventCode:\\s(?<EventCode>\\d+)"
+> | search EventCode=4624
+> | stats count by host, _time
+> | sort -_time
+> ```
+>
+> ![Successful Logins](screenshots/successful_logins.png)
 
-### 1. Extract Event Code
-```spl
-index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
-| table _time, host, source, sourcetype, _raw
-| head 10
+---
 
-## 2. Count Successful Logins (4624)
-```spl
-index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
-| rex "EventCode:\s(?<EventCode>\d+)"
-| search EventCode=4624
-| stats count by host, _time
-| sort -_time
+> ## Step 3: Credential Manager Access Events (5379)
+> **Purpose:** Detect and count Credential Manager logins (Event ID 5379).
+>
+> ```spl
+> index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
+> | rex "EventCode:\\s(?<EventCode>\\d+)"
+> | search EventCode=5379
+> | stats count by host, _time
+> | sort -_time
+> ```
+>
+> ![Credential Manager Access](screenshots/credential_access.png)
 
-## 3. Count Credential Manager Events (5379)
-```spl
-index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
-| rex "EventCode:\s(?<EventCode>\d+)"
-| search EventCode=5379
-| stats count by host, _time
-| sort -_time
+---
 
-## 4. Detect Logins Outside Normal Hours (e.g., 9 PM – 6 AM)
-```spl
-index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
-| rex "EventCode:\s(?<EventCode>\d+)"
-| search EventCode=4624
-| eval hour=strftime(_time,"%H")
-| where hour<6 OR hour>21
-| stats count by host, hour
-| sort -hour
+> ## Step 4: Logins Outside Normal Hours
+> **Purpose:** Identify logins during unusual times (before 6 AM or after 9 PM).
+>
+> ```spl
+> index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
+> | rex "EventCode:\\s(?<EventCode>\\d+)"
+> | search EventCode=4624
+> | eval hour=strftime(_time,"%H")
+> | where hour<6 OR hour>21
+> | stats count by host, hour
+> | sort -hour
+> ```
+>
+> ![Logins Outside Normal Hours](screenshots/logins_outside_hours.png)
 
-## 3. Multiple Logins 
-```spl
-index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
-| rex "EventCode:\s(?<EventCode>\d+)"
-| search EventCode=4624
-| stats count by host
-| where count>5
-| sort -count
+---
 
-![Description](screenshots/image_name.png)
+> ## Step 5: Hosts with Multiple Logins
+> **Purpose:** Detect hosts/accounts with repeated login attempts (possible brute force or automated login).
+>
+> ```spl
+> index=security_logs source="C:\\Users\\yvett\\OneDrive\\Documents\\comptia Security\\CHATGPT\\exiting_sucurity_logs.evtx"
+> | rex "EventCode:\\s(?<EventCode>\\d+)"
+> | search EventCode=4624
+> | stats count by host
+> | where count>5
+> | sort -count
+> ```
+>
+> ![Hosts with Multiple Logins](screenshots/multiple_logins.png)
 
+---
 
+## 🚀 Next Steps
+- Extend detection to include **successful logins after multiple failures**.  
+- Correlate with **geolocation or threat intelligence** to detect suspicious logins.  
+- Automate alerts for repeated failures in a short timeframe.
+
+---
+
+## 👤 Author
+**Yvette Menye**  
+Cybersecurity Analyst | SOC & Threat Detection Enthusiast
