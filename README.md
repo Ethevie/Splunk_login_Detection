@@ -64,7 +64,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -hour
 > ```
 >
-> ![Logins Outside Normal Hours](screenshots/logins_outside_hours.png)
+> ![Logins Outside Normal Hours](screenshots/Logins Outside normal hours.png)
 
 ---
 
@@ -80,7 +80,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -count
 > ```
 >
-> ![Hosts with Multiple Logins](screenshots/multiple_logins.png)
+> ![Hosts with Multiple Logins](screenshots/Host with multiple logins.png)
 
 ---
 
