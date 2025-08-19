@@ -32,7 +32,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -_time
 > ```
 >
-> ![Successful Logins](screenshots/successful_logins.png)
+> ![Successful Logins](screenshots/Successful_logins.png)
 
 ---
 
@@ -47,7 +47,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -_time
 > ```
 >
-> ![Credential Manager Access](screenshots/credential_access.png)
+> ![Credential Manager Access](screenshots/Credential_Manager_Access.png)
 
 ---
 
