@@ -32,7 +32,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -_time
 > ```
 >
-> ![Successful Logins](screenshots/Successful_logins.png)
+> ![Successful Logins](screenshots/Successful logins.png)
 
 ---
 
