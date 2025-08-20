@@ -6,7 +6,21 @@ It includes SPL queries for monitoring successful logins, Credential Manager acc
 The goal is to simulate a real-world SOC workflow for monitoring suspicious authentication activity.
 
 ---
+## ✅ Key Takeaways  
+- Applied Splunk SPL queries to analyze Windows Security Event logs.  
+- Created detections for:  
+  - Successful and failed login attempts.  
+  - Credential manager access (EventCode 5379).  
+  - Logins outside normal working hours.  
+  - Multiple logins from the same host.  
+- Documented results with queries **and screenshots** for clarity.  
 
+This project highlights my ability to:  
+- Write and optimize SPL queries.  
+- Investigate authentication-related anomalies.  
+- Present findings in a clear, professional, and technical format.
+
+  ---
 > ## Step 1: Event Code Extraction
 > **Purpose:** Verify that EventCodes are extracted correctly from the Windows logs.
 >
