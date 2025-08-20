@@ -32,7 +32,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -_time
 > ```
 >
-> ![Successful Logins](screenshots/Successful logins.png)
+> ![Successful Logins](screenshots/Successful_logins.png)
 
 ---
 
@@ -64,7 +64,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -hour
 > ```
 >
-> ![Logins Outside Normal Hours](screenshots/Logins Outside normal hours.png)
+> ![Logins Outside Normal Hours](screenshots/Logins_Outside_normal_hours.png)
 
 ---
 
@@ -80,7 +80,7 @@ The goal is to simulate a real-world SOC workflow for monitoring suspicious auth
 > | sort -count
 > ```
 >
-> ![Hosts with Multiple Logins](screenshots/Host with multiple logins.png)
+> ![Hosts with Multiple Logins](screenshots/Host_with_multiple_logins.png)
 
 ---
 
